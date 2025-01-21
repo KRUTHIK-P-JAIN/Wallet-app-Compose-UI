@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Wallet App UI in Compose</string>
+    <string name="my_balance">My balance</string>
+</resources>
