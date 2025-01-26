@@ -1,4 +1,4 @@
-package com.example.walletappuiincompose.components
+package com.example.walletappuiincompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

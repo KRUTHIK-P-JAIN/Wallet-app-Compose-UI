@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Wallet App UI in Compose</string>
-    <string name="my_balance">My balance</string>
+    <string name="my_balance">My Balance</string>
+    <string name="visa">visa</string>
+    <string name="spending_breakdown">Spending Breakdown</string>
+    <string name="spending_statistics">Spending Statistics</string>
 </resources>

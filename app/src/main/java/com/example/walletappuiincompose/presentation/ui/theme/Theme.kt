@@ -1,4 +1,4 @@
-package com.example.walletappuiincompose.ui.theme
+package com.example.walletappuiincompose.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

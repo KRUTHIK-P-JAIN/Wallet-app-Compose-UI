@@ -1,4 +1,4 @@
-package com.example.walletappuiincompose.components
+package com.example.walletappuiincompose.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,16 +27,23 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.walletappuiincompose.R
+import com.example.walletappuiincompose.data.model.User
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun CardSection() {
+fun CardSectionPreview() {
+    CardSection(user = User())
+}
+
+@Composable
+fun CardSection(user: User) {
     Box {
         Box(
             modifier = Modifier
@@ -56,13 +63,13 @@ fun CardSection() {
             elevation = CardDefaults.cardElevation(6.dp),
             shape = RoundedCornerShape(20.dp),
         ) {
-            CardContent(Modifier.fillMaxSize())
+            CardContent(Modifier.fillMaxSize(), user)
         }
     }
 }
 
 @Composable
-fun CardContent(modifier: Modifier = Modifier) {
+fun CardContent(modifier: Modifier = Modifier, user: User) {
     Box(
         modifier = modifier
             .background(
@@ -95,14 +102,14 @@ fun CardContent(modifier: Modifier = Modifier) {
         ) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "My Balance",
+                text = stringResource(R.string.my_balance),
                 color = MaterialTheme.colorScheme.onPrimary.copy(0.6f),
                 fontSize = 22.sp,
                 fontFamily = Font(R.font.play).toFontFamily()
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "$4,453.00",
+                text = "$${user.balance}",
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 40.sp,
                 fontFamily = Font(R.font.play).toFontFamily()
@@ -117,14 +124,14 @@ fun CardContent(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
-                text = "* * * * 5678",
+                text = "* * * * ${user.card.last4}",
                 color = MaterialTheme.colorScheme.onPrimary.copy(0.8f),
                 fontSize = 23.sp,
                 fontFamily = Font(R.font.play).toFontFamily()
             )
             Icon(
                 painter = painterResource(id = R.drawable.visa),
-                contentDescription = "visa",
+                contentDescription = stringResource(R.string.visa),
                 modifier = Modifier
                     .size(100.dp)
                     .offset(y = 30.dp), // offset was not used in referenced video. know why?

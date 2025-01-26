@@ -1,6 +1,5 @@
-package com.example.walletappuiincompose.components
+package com.example.walletappuiincompose.presentation.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,24 +26,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.walletappuiincompose.R
-import com.example.walletappuiincompose.randomColor
+import com.example.walletappuiincompose.data.model.SpendingBreakdown
+import com.example.walletappuiincompose.presentation.randomColor
 
-@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
-fun SpendingSection() {
+fun SpendingSectionPreview() {
+    SpendingSection(spendingBreakdown = spendingItems)
+}
+
+@Composable
+fun SpendingSection(spendingBreakdown: List<SpendingBreakdown>) {
     //column was not used in referenced video, looks fine. but I had use column then only the ui was intact. know why?
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Text(
-            text = "Spending Breakdown",
+            text = stringResource(R.string.spending_breakdown),
             fontSize = 25.sp,
             fontFamily = Font(R.font.play).toFontFamily(),
             modifier = Modifier.padding(horizontal = 22.dp)
@@ -53,7 +59,7 @@ fun SpendingSection() {
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(spendingItems) {
+            items(spendingBreakdown) {
                 SpendingItems(it)
                 Spacer(modifier = Modifier.width(16.dp))
             }
@@ -63,7 +69,7 @@ fun SpendingSection() {
 
 @Composable
 fun SpendingItems(
-    spendingItem: SpendingItem
+    spendingItem: SpendingBreakdown
 ) {
     ElevatedCard(
         modifier = Modifier.size(150.dp),
@@ -73,12 +79,12 @@ fun SpendingItems(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)// need to understand this
-                .background(spendingItem.color.copy(0.5f))
+                .background(randomColor().copy(0.5f))
                 .padding(20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(
-                imageVector = spendingItem.icon,
+                imageVector = getIcon(spendingItem.icon),
                 contentDescription = spendingItem.name,
                 tint = Color.Black.copy(0.8f),
                 modifier = Modifier.size(33.dp)
@@ -101,36 +107,34 @@ fun SpendingItems(
     }
 }
 
+fun getIcon(icon: String): ImageVector {
+    return when (icon) {
+        "ic_fork_knife" -> Icons.Rounded.Restaurant
+        "ic_shopping_bag" -> Icons.Rounded.ShoppingBag
+        "ic_health" -> Icons.AutoMirrored.Rounded.DirectionsRun
+        else -> Icons.Rounded.Subscriptions
+    }
+}
+
 val spendingItems = listOf(
-    SpendingItem(
+    SpendingBreakdown(
         name = "Food",
         amount = 123f,
-        color = randomColor(),
-        icon = Icons.Rounded.Restaurant
+        icon = "ic_fork_knife"
     ),
-    SpendingItem(
+    SpendingBreakdown(
         name = "Shopping",
         amount = 166f,
-        color = randomColor(),
-        icon = Icons.Rounded.ShoppingBag
+        icon = "ic_shopping_bag"
     ),
-    SpendingItem(
+    SpendingBreakdown(
         name = "Subscriptions",
         amount = 84f,
-        color = randomColor(),
-        icon = Icons.Rounded.Subscriptions
+        icon = "ic_subscription"
     ),
-    SpendingItem(
+    SpendingBreakdown(
         name = "Health",
         amount = 140f,
-        color = randomColor(),
-        icon = Icons.AutoMirrored.Rounded.DirectionsRun
+        icon = "ic_health"
     )
-)
-
-data class SpendingItem(
-    val name: String,
-    val amount: Float,
-    val color: Color,
-    val icon: ImageVector
 )
